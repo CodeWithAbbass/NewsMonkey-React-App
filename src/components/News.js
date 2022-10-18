@@ -1,10 +1,21 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Loading from "./Spinner";
+import PropTypes from 'prop-types'
 
 // My API
 // 1f05d798e5904ebe804e9a7edc39771d
 export class News extends Component {
+  static defaultProps = {
+    country: "us",
+    pageSize: 6,
+    category: "general",
+  }
+  static propTypes = {
+    country: PropTypes.string,
+    pageSize: PropTypes.number,
+    category: PropTypes.string,
+  }
   constructor() {
     super();
     this.state = {
@@ -15,7 +26,7 @@ export class News extends Component {
   }
 //  Its Call After render() Method
   async componentDidMount() {
-    const URL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({Loading:true})
     const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
     const data = await response.json(); // Convert Json Data Into JavaScript Object. Parsing...
@@ -28,7 +39,7 @@ export class News extends Component {
   }
 
   handlePrevClick = async () => {
-    const URL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${
+    const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${
       this.state.page - 1
     }&pageSize=${this.props.pageSize}`;
     this.setState({Loading:true})
@@ -42,7 +53,7 @@ export class News extends Component {
   };
   handleNextClick = async () => {
     // console.log("Next")
-    const URL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${
+    const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${
       this.state.page + 1
     }&pageSize=${this.props.pageSize}`;
     this.setState({Loading:true})
@@ -59,7 +70,7 @@ export class News extends Component {
       <div className="container text-center my-5">
         <h1>NewsMonkey - Top Headlines</h1>
         <div className="row mt-5">
-          {this.state.articles.map((obj) => {
+          {!this.state.Loading && this.state.articles.map((obj) => {
             return (
               <div className="col-md-4 g-4" key={obj.url}>
                 <NewsItem
@@ -73,7 +84,7 @@ export class News extends Component {
               </div>
             );
           })}
-        {this.setState.Loading && <Loading/>}
+        {this.state.Loading && <Loading/>}
           {/* 
                     // This is Simplest Example
                     <div className="col-md-4 g-4 ">
