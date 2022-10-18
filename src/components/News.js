@@ -75,9 +75,10 @@ export class News extends Component {
               <div className="col-md-4 g-4" key={obj.url}>
                 <NewsItem
                   title={obj.title ? obj.title.slice(0, 30) : ""}
-                  description={
-                    obj.description ? obj.description.slice(0, 70) : ""
-                  }
+                  source={obj.source.name}
+                  description={obj.description ? obj.description.slice(0, 70) : "Description Not Found"}
+                  author={obj.author? obj.author.slice(0, 15): ""}
+                  date={obj.publishedAt}
                   imageUrl={obj.urlToImage}
                   newUrl={obj.url}
                 />
