@@ -23,7 +23,7 @@ export class News extends Component {
     this.setState({ 
       articles: data.articles,
       totalResults: data.totalResults,
-      Loading:false,
+      Loading:false
      });
   }
 
