@@ -1,0 +1,69 @@
+{
+  "status": "ok",
+  "totalResults": 6,
+  "articles": [
+    {
+      "source": { "id": "bleacher-report", "name": "Bleacher Report" },
+      "author": null,
+      "title": "☄️ EMBIID-TATUM ANIME FIGHT☄️",
+      "description": "Fan easier, fan faster and fan better with Bleacher Report. Keep up with the latest storylines, expert analysis, highlights and scores for all your favorite sports.",
+      "url": "https://bleacherreport.com/videos/259156-joel-embiid-vs-jayson-tatum-epic-battle-hero-ball-episode-1",
+      "urlToImage": "https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/HFUBSFSMQXMLDJI2EXMKTGTUQY.jpg&w=1440",
+      "publishedAt": "2022-10-17T21:07:16.5292088Z",
+      "content": "EMBIID VS. TATUM IN EPIC FIGHT The battle for the face of the league begins. Hero Ball premieres NOW"
+    },
+    {
+      "source": { "id": "les-echos", "name": "Les Echos" },
+      "author": "Hayat Gazzane",
+      "title": "Energie, transports, fonction publique… quelles perturbations mardi ?",
+      "description": "Comme le redoutait l'exécutif, la contestation sociale qui touche les raffineries a fait tache d'huile. Des cheminots aux transporteurs routiers en passant par les enseignants, de nombreux professionnels issus de divers secteurs prévoient de faire grève et ma…",
+      "url": "https://www.lesechos.fr/economie-france/social/energie-transports-fonction-publique-quelles-perturbations-mardi-1870152",
+      "urlToImage": "https://media.lesechos.com/api/v1/images/view/634d2c222ad96072463ca447/1280x720/0702577307105-web-tete.jpg",
+      "publishedAt": "2022-10-17T10:14:42Z",
+      "content": "« Il faut des mesures salariales collectives ». Ce lundi sur France Inter, le secrétaire général de la CGT, Philippe Martinez, a rappelé le mot d'ordre des manifestations interprofessionnelles prévue… [+5100 chars]"
+    },
+    {
+      "source": { "id": "bleacher-report", "name": "Bleacher Report" },
+      "author": null,
+      "title": " Stefon Diggs Interview ",
+      "description": "Fan easier, fan faster and fan better with Bleacher Report. Keep up with the latest storylines, expert analysis, highlights and scores for all your favorite sports.",
+      "url": "https://bleacherreport.com/videos/255535-von-miller-x-stefon-diggs",
+      "urlToImage": null,
+      "publishedAt": "2022-10-13T16:37:36.6975172Z",
+      "content": null
+    },
+    {
+      "source": { "id": "bleacher-report", "name": "Bleacher Report" },
+      "author": null,
+      "title": "George Pickens Blocking Drill ",
+      "description": "Fan easier, fan faster and fan better with Bleacher Report. Keep up with the latest storylines, expert analysis, highlights and scores for all your favorite sports.",
+      "url": "https://bleacherreport.com/videos/249191-george-pickens-is-underrated",
+      "urlToImage": null,
+      "publishedAt": "2022-09-15T15:07:20.3702294Z",
+      "content": null
+    },
+    {
+      "source": {
+        "id": "the-washington-times",
+        "name": "The Washington Times"
+      },
+      "author": "The Washington Times https://www.washingtontimes.com",
+      "title": "Latest Quizzes",
+      "description": "Take a break from the hard news of the day and enjoy a quiz on entertainment, sports, history and politics only from The Washington Times.",
+      "url": "https://www.washingtontimes.com/quiz/",
+      "urlToImage": null,
+      "publishedAt": "2022-08-30T16:37:43.8583104Z",
+      "content": "Featured Quizzes\r\nTake the challenge to learn about the life and career highlights of famed nonagenarian actress and comedian Betty White.\r\n Shares \r\nRead our synopsis and correctly identify a litera… [+32510 chars]"
+    },
+    {
+      "source": { "id": "usa-today", "name": "USA Today" },
+      "author": null,
+      "title": "Daily Briefing",
+      "description": "The day's top stories, from sports to movies to politics to world events.",
+      "url": "https://profile.usatoday.com/newsletters/daily-briefing/",
+      "urlToImage": "https://profile.usatoday.com/newsletters/resources/usat/property/usatoday/newsletter-thumbs/8872UT-E-NLETTER02@2x.jpg",
+      "publishedAt": "2021-08-15T15:35:07+00:00",
+      "content": "The day's top stories, from sports to movies to politics to world events."
+    }
+  ]
+}
