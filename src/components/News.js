@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
+import Loading from "./Spinner";
 
 // My API
 // 1f05d798e5904ebe804e9a7edc39771d
@@ -8,29 +9,35 @@ export class News extends Component {
     super();
     this.state = {
       articles: [],
-      loading: false,
+      Loading: false,
       page: 1,
     };
   }
-  // Its Call After render() Method
+//  Its Call After render() Method
   async componentDidMount() {
     const URL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    this.setState({Loading:true})
     const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
     const data = await response.json(); // Convert Json Data Into JavaScript Object. Parsing...
     // console.log(data)
-    this.setState({ articles: data.articles, totalResults: data.totalResults });
-    // Below We Use Props like title, description, image
+    this.setState({ 
+      articles: data.articles,
+      totalResults: data.totalResults,
+      Loading:false,
+     });
   }
 
   handlePrevClick = async () => {
     const URL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${
       this.state.page - 1
     }&pageSize=${this.props.pageSize}`;
+    this.setState({Loading:true})
     const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
     const data = await response.json(); // Convert Json Data Into JavaScript Object. Parsing...
     this.setState({
       articles: data.articles,
       page: this.state.page - 1,
+      Loading:false,
     });
   };
   handleNextClick = async () => {
@@ -38,11 +45,13 @@ export class News extends Component {
     const URL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${
       this.state.page + 1
     }&pageSize=${this.props.pageSize}`;
+    this.setState({Loading:true})
     const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
     const data = await response.json(); // Convert Json Data Into JavaScript Object. Parsing...
     this.setState({
       articles: data.articles,
       page: this.state.page + 1,
+      Loading:false,
     });
   };
   render() {
@@ -64,7 +73,7 @@ export class News extends Component {
               </div>
             );
           })}
-
+        {this.setState.Loading && <Loading/>}
           {/* 
                     // This is Simplest Example
                     <div className="col-md-4 g-4 ">
@@ -75,6 +84,8 @@ export class News extends Component {
                         />
                     </div> */}
         </div>
+
+        {/* Previous And Next Buttons  */}
         <div className="container d-flex justify-content-between mt-5">
           <button
             disabled={this.state.page <= 1}
