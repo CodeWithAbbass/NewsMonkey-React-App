@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Loading from "./Spinner";
 import PropTypes from 'prop-types'
-
+import InfiniteScroll from 'react-infinite-scroll-component';
 // My API
 // 1f05d798e5904ebe804e9a7edc39771d
 export class News extends Component {
@@ -16,77 +16,89 @@ export class News extends Component {
     pageSize: PropTypes.number,
     category: PropTypes.string,
   }
-  constructor() {
-    super();
+  CapitalizeFirstChar = (String) => {
+    return String.charAt(0).toUpperCase() + String.slice(1);
+  }
+  constructor(props) {
+    super(props);
     this.state = {
       articles: [],
       Loading: false,
       page: 1,
+      totalResults: 0,
     };
+    document.title = this.CapitalizeFirstChar(`${this.props.category} - NewsMonkey`);
   }
-//  Its Call After render() Method
-  async componentDidMount() {
+
+  async newsUpdate() {
     const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-    this.setState({Loading:true})
+    this.setState({ Loading: true })
     const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
     const data = await response.json(); // Convert Json Data Into JavaScript Object. Parsing...
     // console.log(data)
-    this.setState({ 
+    this.setState({
       articles: data.articles,
       totalResults: data.totalResults,
-      Loading:false
-     });
+      Loading: false
+    });
+  }
+
+  fetchMoreData = async () => {
+    this.setState({ Loading: true, page: this.state.page + 1, })
+    const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
+    const data = await response.json(); // Convert Json Data Into JavaScript Object. Parsing...
+    // console.log(data)
+    this.setState({
+      articles: this.state.articles.concat(data.articles),
+      totalResults: data.totalResults,
+      Loading: false,
+    })
+  };
+  //  Its Call After render() Method
+  async componentDidMount() {
+    this.newsUpdate();
   }
 
   handlePrevClick = async () => {
-    const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${
-      this.state.page - 1
-    }&pageSize=${this.props.pageSize}`;
-    this.setState({Loading:true})
-    const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
-    const data = await response.json(); // Convert Json Data Into JavaScript Object. Parsing...
-    this.setState({
-      articles: data.articles,
-      page: this.state.page - 1,
-      Loading:false,
-    });
+    this.setState({ page: this.state.page - 1 })
+    this.newsUpdate();
   };
   handleNextClick = async () => {
-    // console.log("Next")
-    const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${
-      this.state.page + 1
-    }&pageSize=${this.props.pageSize}`;
-    this.setState({Loading:true})
-    const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
-    const data = await response.json(); // Convert Json Data Into JavaScript Object. Parsing...
-    this.setState({
-      articles: data.articles,
-      page: this.state.page + 1,
-      Loading:false,
-    });
+    this.setState({ page: this.state.page + 1 })
+    this.newsUpdate();
   };
   render() {
     return (
       <div className="container text-center my-5">
-        <h1>NewsMonkey - Top Headlines</h1>
-        <div className="row mt-5">
-          {!this.state.Loading && this.state.articles.map((obj) => {
-            return (
-              <div className="col-md-4 g-4" key={obj.url}>
-                <NewsItem
-                  title={obj.title ? obj.title.slice(0, 30) : ""}
-                  source={obj.source.name}
-                  description={obj.description ? obj.description.slice(0, 70) : "Description Not Found"}
-                  author={obj.author? obj.author.slice(0, 15): ""}
-                  date={obj.publishedAt}
-                  imageUrl={obj.urlToImage}
-                  newUrl={obj.url}
-                />
-              </div>
-            );
-          })}
-        {this.state.Loading && <Loading/>}
-          {/* 
+        <h1>NewsMonkey - Top {this.CapitalizeFirstChar(`${this.props.category}`)} Headlines</h1>
+        {/* Below We Use Infinit Scroll. If We Want to Use Loading Spinner Please Comment Just Below InfiniteScroll */}
+        <InfiniteScroll
+          dataLength={this.state.articles.length}
+          next={this.fetchMoreData}
+          hasMore={this.state.articles.length !== this.state.totalResults}
+          loader={<Loading />}>
+          <div className="row container mt-5">
+            {/* For Loading Spinner Please UnComment Below Code AND Comment Above InfinitScroll */}
+            {/* {!this.state.Loading && this.state.articles.map((obj) => { */}
+            {this.state.articles.map((obj) => {
+              return (
+                <div className="col-md-4 g-4" key={obj.url}>
+                  <NewsItem
+                    title={obj.title ? obj.title.slice(0, 30) : ""}
+                    source={obj.source.name}
+                    description={obj.description ? obj.description.slice(0, 70) : "Description Not Found"}
+                    author={obj.author ? obj.author.slice(0, 15) : ""}
+                    date={obj.publishedAt}
+                    imageUrl={obj.urlToImage}
+                    newUrl={obj.url}
+                  />
+                </div>
+              );
+            })}
+            {/* UnComment If We Use Loading Spinner  */}
+            {/* {this.state.Loading && <Loading/>} */}
+            {/* 
                     // This is Simplest Example
                     <div className="col-md-4 g-4 ">
                         <NewsItem
@@ -95,9 +107,11 @@ export class News extends Component {
                         imageUrl="https://d.newsweek.com/en/full/1987118/oracle-advertising-cx-sq.jpg"
                         />
                     </div> */}
-        </div>
+          </div>
+        </InfiniteScroll>
 
-        {/* Previous And Next Buttons  */}
+        {/* 
+        Previous And Next Buttons 
         <div className="container d-flex justify-content-between mt-5">
           <button
             disabled={this.state.page <= 1}
@@ -117,7 +131,7 @@ export class News extends Component {
           >
             Next &rarr;
           </button>
-        </div>
+        </div> */}
       </div>
     );
   }
