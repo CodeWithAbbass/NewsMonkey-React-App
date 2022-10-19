@@ -3,8 +3,7 @@ import NewsItem from "./NewsItem";
 import Loading from "./Spinner";
 import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroll-component';
-// My API
-// 1f05d798e5904ebe804e9a7edc39771d
+
 export class News extends Component {
   static defaultProps = {
     country: "us",
@@ -32,7 +31,7 @@ export class News extends Component {
 
   async newsUpdate() {
     this.props.setProgress(10)
-    const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({ Loading: true })
     this.props.setProgress(30)
     const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
@@ -51,7 +50,7 @@ export class News extends Component {
 
   fetchMoreData = async () => {
     this.setState({ Loading: true, page: this.state.page + 1, })
-    const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
     const data = await response.json(); // Convert Json Data Into JavaScript Object. Parsing...
     // console.log(data)
