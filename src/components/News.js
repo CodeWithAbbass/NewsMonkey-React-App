@@ -31,16 +31,22 @@ export class News extends Component {
   }
 
   async newsUpdate() {
+    this.props.setProgress(10)
     const URL = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1f05d798e5904ebe804e9a7edc39771d&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({ Loading: true })
+    this.props.setProgress(30)
     const response = await fetch(URL); // "GET" Method is by Default in Fetch, Thats Because We Don't Need to Write "GET"
     const data = await response.json(); // Convert Json Data Into JavaScript Object. Parsing...
+    this.props.setProgress(50)
+
     // console.log(data)
     this.setState({
       articles: data.articles,
       totalResults: data.totalResults,
       Loading: false
     });
+    this.props.setProgress(100)
+
   }
 
   fetchMoreData = async () => {
@@ -54,6 +60,7 @@ export class News extends Component {
       totalResults: data.totalResults,
       Loading: false,
     })
+
   };
   //  Its Call After render() Method
   async componentDidMount() {
@@ -70,7 +77,7 @@ export class News extends Component {
   };
   render() {
     return (
-      <div className="container text-center my-5">
+      <div className="container text-center my-5" >
         <h1>NewsMonkey - Top {this.CapitalizeFirstChar(`${this.props.category}`)} Headlines</h1>
         {/* Below We Use Infinit Scroll. If We Want to Use Loading Spinner Please Comment Just Below InfiniteScroll */}
         <InfiniteScroll
@@ -78,12 +85,13 @@ export class News extends Component {
           next={this.fetchMoreData}
           hasMore={this.state.articles.length !== this.state.totalResults}
           loader={<Loading />}>
-          <div className="row container mt-5">
+            
+          <div className="row container mt-5" >
             {/* For Loading Spinner Please UnComment Below Code AND Comment Above InfinitScroll */}
             {/* {!this.state.Loading && this.state.articles.map((obj) => { */}
-            {this.state.articles.map((obj) => {
+            {this.state.articles.map((obj, index) => {
               return (
-                <div className="col-md-4 g-4" key={obj.url}>
+                <div className="col-md-4 g-4" key={index}>
                   <NewsItem
                     title={obj.title ? obj.title.slice(0, 30) : ""}
                     source={obj.source.name}
