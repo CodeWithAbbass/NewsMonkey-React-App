@@ -69,6 +69,7 @@ const News = (props)=> {
         <div className="container text-center my-5" >
         <h1 style={{marginTop: "5rem"}}>NewsMonkey - Top {CapitalizeFirstChar(`${props.category}`)} Headlines </h1>
         {/* Below We Use Infinit Scroll. If We Want to Use Loading Spinner Please Comment Just Below InfiniteScroll */}
+        {loading && <Spinner/>}
         <InfiniteScroll
           dataLength={articles.length}
           next={fetchMoreData}
